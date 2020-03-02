@@ -14,9 +14,9 @@ namespace BinarySearchTree
         {
             root = null;
         }
-        public void Add( Node node)
+        public void Add( Node newNode)
         {
-            Node tempNode = new Node(node.data);
+            Node tempNode = new Node(newNode.data);
             if (root == null)
             {
                 root = tempNode;
@@ -25,16 +25,16 @@ namespace BinarySearchTree
             else
             {
                 Node currentNode = root;
-                Node parent;
+                Node parentNode;
                 while (true)
                 {
-                    parent = currentNode;
-                    if (node.data < currentNode.data)
+                    parentNode = currentNode;
+                    if (newNode.data < currentNode.data)
                     {
                         currentNode = currentNode.leftNode;
                         if (currentNode == null)
                         {
-                            parent.leftNode = node;
+                            parentNode.leftNode = newNode;
                             return;
                         }
                     }
@@ -43,7 +43,7 @@ namespace BinarySearchTree
                         currentNode = currentNode.rightNode;
                         if (currentNode == null)
                         {
-                            parent.rightNode = node;
+                            parentNode.rightNode = newNode;
                             return;
                         }
                     }
@@ -51,20 +51,23 @@ namespace BinarySearchTree
             }
             
         }
-        public bool Search(Node node)
+        public bool Search(int nodeData)
         {
-            if (root == null)
-                return false;
-            if (root.data == node.data)
-                return true;
-
-            bool isInLeft = Search(node.leftNode);
-            if (isInLeft)
-                return true;
-
-            bool isInRight = Search(node.rightNode);
-
-            return isInRight;
+            Node currentNode = root;
+            while (currentNode != null)
+            {
+                if (currentNode.data == nodeData)
+                    return true;
+                else if (currentNode.data > nodeData)
+                {
+                    currentNode = currentNode.leftNode;
+                }
+                else
+                {
+                    currentNode = currentNode.rightNode;
+                }
+            }
+            return false;
         }
     }
 }
